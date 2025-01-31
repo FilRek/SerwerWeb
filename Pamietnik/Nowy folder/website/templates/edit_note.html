@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ note.title }}{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Edit Note</h1>
+
+<form action="{{ url_for('views.edit_note', note_id=note.id) }}" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ note.title }}" required>
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea class="form-control" id="content" name="content" rows="4" required>{{ note.data }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="image">Change Image</label>
+        <input type="file" class="form-control-file" id="image" name="image">
+    </div>
+    {% if note.image_file %}
+        <p>Current image:</p>
+        <img src="{{ url_for('static', filename='images/' + note.image_file) }}" alt="Note Image" width="200">
+    {% endif %}
+    <br><br>
+    <button type="submit" class="btn btn-primary">Update Note</button>
+</form>
+<a href="{{ url_for('views.view_note', note_id=note.id) }}" class="btn btn-secondary mt-2">Cancel</a>
+{% endblock %}

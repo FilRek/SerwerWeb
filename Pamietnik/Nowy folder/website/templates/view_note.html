@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ note.title }}{% endblock %}
+
+{% block content %}
+<h1 align="center">{{ note.title }}</h1>
+
+<p style="word-wrap: break-word;">{{ note.data | replace("\n", "<br>") | safe }}</p>
+
+{% if note.image_file %}
+    <br />
+    <img src="{{ url_for('static', filename='images/' + note.image_file) }}" alt="Note Image" width="300">
+    <br />
+{% endif %}
+
+<small>Edited at: {{ note.date.strftime('%Y-%m-%d %H:%M') }}</small>
+
+<br /><br />
+<a href="{{ url_for('views.home') }}" class="btn btn-secondary">Back to Notes</a>
+
+<form action="{{ url_for('views.delete_note', note_id=note.id) }}" method="POST" style="display:inline;">
+    <button type="submit" class="btn btn-danger">Delete Note</button>
+</form>
+
+<a href="{{ url_for('views.edit_note', note_id=note.id) }}" class="btn btn-warning">Edit Note</a>
+
+{% endblock %}

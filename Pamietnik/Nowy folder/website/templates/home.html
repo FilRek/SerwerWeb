@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Pamiętnik{% endblock %}
+
+{% block content %}
+
+<h2 align="center">Your Notes</h2> 
+
+<ul class="list-group list-group-flush">
+    {% for note in user.notes %}
+    <li class="list-group-item d-flex justify-content-between">
+        <a href="{{ url_for('views.view_note', note_id=note.id) }}">
+            <strong>{{ note.title }}</strong>
+        </a>
+        <small class="text-right">Created at: {{ note.date.strftime('%Y-%m-%d %H:%M') }}</small>
+    </li>
+    {% endfor %}
+</ul>
+
+<br />
+<div align="center">
+    <a href="{{ url_for('views.create_note') }}" class="btn btn-primary">Create New Note</a>
+</div>
+{% endblock %}
